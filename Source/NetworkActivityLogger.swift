@@ -50,6 +50,8 @@ public enum NetworkActivityLoggerLevel {
 
 /// `NetworkActivityLogger` logs requests and responses made by Alamofire.SessionManager, with an adjustable level of detail.
 public class NetworkActivityLogger {
+    
+    public Int reqCnt = 0
     // MARK: - Properties
     
     /// The shared network activity logger for the system.
@@ -71,6 +73,11 @@ public class NetworkActivityLogger {
     
     deinit {
         stopLogging()
+    }
+    
+    func logReqCnt(){
+        self.reqCnt = self.reqCnt + 1
+        print("Request Calling : \(self.reqCnt)")
     }
     
     // MARK: - Logging
@@ -132,6 +139,7 @@ public class NetworkActivityLogger {
                 
                 print("\(httpMethod) '\(requestURL.absoluteString)'")
             default:
+                self.logReqCnt()
                 break
             }
         }
